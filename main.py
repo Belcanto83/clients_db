@@ -13,15 +13,15 @@ def main():
 
     with psycopg2.connect(database=DB_NAME, user=DB_USER, password=db_user_pass) as db_conn:
         create_db(db_conn)
-        # add_new_client(db_conn, 'Алексей', 'Осипов', phone='+79054001824', email='osip.a@ya.ru')
-        # add_new_client(db_conn, '@@@@Владимир', 'Парнет')
-        # add_new_client(db_conn, 'Владимир', 'Беляков', email='bel@jci.com')
-        # add_new_client(db_conn, 'Ярослав', 'Кудинов', phone='ytttttt', email='kud.ya@hts.ru')
-        # add_new_client(db_conn, 'Николай', 'Староверов', phones=['+79050121420', '+79261114455'], emails=['starov@jci.com'])
-        # add_phone_to_client(db_conn, 4, '+7787277')
-        # update_client_info(db_conn, 9, phones=['+79156', '+791178'])
-        # delete_phone_from_client(db_conn, 4)
-        # delete_client(db_conn, 9)
+        add_new_client(db_conn, 'Алексей', 'Осипов', phones=['+79054001824'], emails=['osip.a@ya.ru'])
+        add_new_client(db_conn, '@@@@Владимир', 'Парнет')
+        add_new_client(db_conn, 'Владимир', 'Беляков', emails=['bel@jci.com'])
+        add_new_client(db_conn, 'Ярослав', 'Кудинов', phones=['ytttttt'], emails=['kud.ya@hts.ru'])
+        add_new_client(db_conn, 'Николай', 'Староверов', phones=['+79050121420', '+79261114455'], emails=['starov@jci.com'])
+        add_phone_to_client(db_conn, 4, '+7787277')
+        update_client_info(db_conn, 9, phones=['+79156', '+791178'])
+        delete_phone_from_client(db_conn, 4)
+        delete_client(db_conn, 9)
         pprint(find_client(db_conn, first_name='%ник%', phone='%926%'))
 
 
