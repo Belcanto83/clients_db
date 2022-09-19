@@ -11,18 +11,28 @@ def main():
         f_data = json.load(f)
     db_user_pass = f_data['pass']
 
+    # В данном случае контекстный менеджер соединения не нужен, т.к. commit мы делаем внутри кода функций
+    # db_conn = psycopg2.connect(database=DB_NAME, user=DB_USER, password=db_user_pass)
     with psycopg2.connect(database=DB_NAME, user=DB_USER, password=db_user_pass) as db_conn:
-        create_db(db_conn)
-        add_new_client(db_conn, 'Алексей', 'Осипов', phones=['+79054001824'], emails=['osip.a@ya.ru'])
-        add_new_client(db_conn, '@@@@Владимир', 'Парнет')
-        add_new_client(db_conn, 'Владимир', 'Беляков', emails=['bel@jci.com'])
-        add_new_client(db_conn, 'Ярослав', 'Кудинов', phones=['ytttttt'], emails=['kud.ya@hts.ru'])
-        add_new_client(db_conn, 'Николай', 'Староверов', phones=['+79050121420', '+79261114455'], emails=['starov@jci.com'])
-        add_phone_to_client(db_conn, 4, '+7787277')
-        update_client_info(db_conn, 9, phones=['+79156', '+791178'])
-        delete_phone_from_client(db_conn, 4)
-        delete_client(db_conn, 9)
-        pprint(find_client(db_conn, first_name='%ник%', phone='%926%'))
+        # create_db(db_conn)
+        # add_new_client(db_conn, 'Алексей', 'Осипов', phones=['+79054001824'], emails=['osip.a@ya.ru'])
+        # add_new_client(db_conn, 'Василий', 'Овсянников', phones=['+79010001100'], emails=['ovso.v@ya.ru'])
+        # add_new_client(db_conn, '@@@@Владимир', 'Парнет')
+        add_new_client(db_conn, 'Ильмир', 'Акчурин', phones=['+79050005500'], emails=['akcha@.v@ya.ru'])
+        # add_new_client(db_conn, 'Владимир', 'Беляков', emails=['bel@jci.com'])
+        # add_new_client(db_conn, 'Ярослав', 'Кудинов', phones=['ytttttt'], emails=['kud.ya@hts.ru'])
+        # add_new_client(db_conn, 'Николай', 'Староверов', phones=['+79050121420', '+79261114455'], emails=['starov@jci.com'])
+        # add_phone_to_client(db_conn, 4, '+7787277')
+        # update_client_info(db_conn, 9, phones=['+79156', '+791178'])
+        # delete_phone_from_client(db_conn, 4)
+        # delete_client(db_conn, 9)
+        # pprint(find_client(db_conn, first_name='%ник%', phone='%926%'))
+        # Контекстный менеджер подключения сам делает commit после всех операций в нем,
+        # поэтому отдельно commit в коде вызываемых функций можно не прописывать, но можно и прописать, если
+        # логика задачи требует разбить запросы к БД на несколько транзакций, иначе будет только 1 транзакция!
+
+    # Закрытие соединения контекстный менеджер подключения не делает, поэтому прописываем close "явно":
+    db_conn.close()
 
 
 def create_db(conn):
